@@ -1,0 +1,7 @@
+Python 3.10
+Ubuntu 22.04.3 LTS
+Mininet
+Open vSwitch 2.17.9
+Ryu 4.34
+iperf
+Git
