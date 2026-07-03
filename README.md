@@ -1,13 +1,5 @@
 # 🚀 SDN QoS Using Ryu Controller
-![Python](https://img.shields.io/badge/Python-3.x-blue)
-
-![Ryu](https://img.shields.io/badge/Ryu-SDN-green)
-
-![OpenFlow](https://img.shields.io/badge/OpenFlow-1.3-orange)
-
-![Mininet](https://img.shields.io/badge/Mininet-Lab-red)
-
-![License](https://img.shields.io/badge/License-MIT-yellow)
+![Python](https://img.shields.io/badge/Python-3.x-blue) ![Ryu](https://img.shields.io/badge/Ryu-SDN-green) ![OpenFlow](https://img.shields.io/badge/OpenFlow-1.3-orange) ![Mininet](https://img.shields.io/badge/Mininet-Lab-red) ![License](https://img.shields.io/badge/License-MIT-yellow)
 
 An SDN (Software Defined Networking) project that implements **Quality of Service (QoS)** using the **Ryu SDN Controller**, **Open vSwitch**, and **Mininet**. The controller classifies traffic into different protocols (ICMP, TCP, UDP) and applies different bandwidth limits using OpenFlow 1.3 meters.
 
