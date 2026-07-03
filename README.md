@@ -1,42 +1,41 @@
-# 🚀 SDN QoS Controller Using Ryu and OpenFlow
+# 🚀 SDN QoS Using Ryu Controller
+![Python](https://img.shields.io/badge/Python-3.x-blue)
 
-![Python](https://img.shields.io/badge/Python-3.10-blue)
-![OpenFlow](https://img.shields.io/badge/OpenFlow-1.3-green)
-![Ryu](https://img.shields.io/badge/Ryu-Controller-red)
-![Mininet](https://img.shields.io/badge/Mininet-Network-orange)
+![Ryu](https://img.shields.io/badge/Ryu-SDN-green)
+
+![OpenFlow](https://img.shields.io/badge/OpenFlow-1.3-orange)
+
+![Mininet](https://img.shields.io/badge/Mininet-Lab-red)
+
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
-A Software Defined Networking (SDN) Quality of Service (QoS) controller developed using the Ryu SDN Framework, OpenFlow 1.3, Open vSwitch, and Mininet.
-
-The controller classifies network traffic into ICMP, TCP, and UDP flows and applies different QoS policies using OpenFlow meters.
+An SDN (Software Defined Networking) project that implements **Quality of Service (QoS)** using the **Ryu SDN Controller**, **Open vSwitch**, and **Mininet**. The controller classifies traffic into different protocols (ICMP, TCP, UDP) and applies different bandwidth limits using OpenFlow 1.3 meters.
 
 ---
 
-# 📌 Features
+## 📌 Features
 
-- SDN Controller using Ryu Framework
-- OpenFlow 1.3 Support
-- QoS using OpenFlow Meters
-- Traffic Classification
-  - ICMP
-  - TCP
-  - UDP
-- MAC Learning Switch
-- Dynamic Flow Installation
-- Bandwidth Limiting
-- Real-time Packet Classification Logs
-- Compatible with Open vSwitch and Mininet
+- ✅ OpenFlow 1.3 based Ryu Controller
+- ✅ Dynamic packet classification
+- ✅ Protocol-aware QoS
+- ✅ Meter Table configuration
+- ✅ ICMP traffic prioritization
+- ✅ TCP bandwidth limiting (3 Mbps)
+- ✅ UDP bandwidth limiting (10 Mbps)
+- ✅ Dynamic flow installation
+- ✅ Real-time packet logging
+- ✅ Mininet topology support
 
 ---
 
 # 🛠 Technologies Used
 
 - Python 3
-- Ryu SDN Framework
+- Ryu SDN Controller
 - OpenFlow 1.3
 - Open vSwitch (OVS)
 - Mininet
-- Ubuntu Linux
+- Ubuntu 20.04
 
 ---
 
@@ -48,88 +47,67 @@ SDN-QoS-Using-Ryu
 ├── controllers/
 │   └── qos_controller.py
 │
-├── config/
-├── docs/
-├── report/
-├── results/
 ├── screenshots/
-├── scripts/
+│   ├── controller-start.png
+│   ├── switch-connected.png
+│   ├── ping-test.png
+│   ├── tcp-test.png
+│   ├── udp-test.png
+│   ├── flow-table.png
+│   ├── dump-meters.png
+│   ├── meter-stats.png
+│   └── controller-logs.png
+│
 ├── topology/
 ├── traffic/
-│
-├── README.md
 ├── requirements.txt
-└── LICENSE
+├── LICENSE
+└── README.md
 ```
 
 ---
 
-# 🏗 Architecture
+# 🌐 Network Topology
 
 ```
-                +----------------------+
-                |    Ryu Controller    |
-                +----------+-----------+
-                           |
-                    OpenFlow 1.3
-                           |
-          +----------------+----------------+
-          |                                 |
-     +---------+                     +---------+
-     |   h1    |                     |   h2    |
-     +---------+                     +---------+
-             \                       /
-              \                     /
-               +-------------------+
-               |   Open vSwitch    |
-               +-------------------+
+        +-----------------------+
+        |    Ryu Controller     |
+        +-----------+-----------+
+                    |
+             OpenFlow 1.3
+                    |
+              +-----+-----+
+              |    OVS    |
+              |    s1      |
+              +--+-----+---+
+                 |     |
+               h1       h2
 ```
 
 ---
 
-# ⚙ QoS Policy
+# ⚙️ QoS Policy
 
-| Protocol | Meter ID | Priority | Bandwidth |
-|----------|----------|----------|-----------|
-| ICMP | 1 | High | 100 Mbps |
-| UDP | 2 | Medium | 10 Mbps |
-| TCP | 3 | Low | 3 Mbps |
-
----
-
-# 🚀 Installation
-
-Clone the repository
-
-```bash
-git clone git@github.com:ShahithJ/SDN-QoS-Using-Ryu.git
-```
-
-Go into the project
-
-```bash
-cd SDN-QoS-Using-Ryu
-```
-
-Install dependencies
-
-```bash
-pip3 install -r requirements.txt
-```
+| Protocol | Meter ID | Bandwidth |
+|----------|----------|-----------|
+| ICMP | 1 | High Priority |
+| UDP | 2 | 10 Mbps |
+| TCP | 3 | 3 Mbps |
 
 ---
 
-# ▶ Running the Controller
+# 🚀 Running the Project
+
+## Start the Controller
 
 ```bash
 cd controllers
-
-ryu-manager qos_controller.py
+~/.local/bin/ryu-manager qos_controller.py
 ```
 
 ---
 
-# 🌐 Creating the Mininet Topology
+## Start Mininet
 
 ```bash
 sudo mn \
@@ -142,18 +120,10 @@ sudo mn \
 
 # 🧪 Testing
 
-## Connectivity Test
+## Ping Test
 
 ```bash
 pingall
-```
-
----
-
-## ICMP Test
-
-```bash
-h1 ping h2
 ```
 
 ---
@@ -162,12 +132,6 @@ h1 ping h2
 
 ```bash
 iperf
-```
-
-Expected Output
-
-```
-≈ 3 Mbps
 ```
 
 ---
@@ -179,55 +143,80 @@ h1 iperf -s -u &
 h2 iperf -u -c h1 -b 20M
 ```
 
-Expected Result
+---
 
-- UDP classified successfully
-- Meter 2 applied
-- Packet drops visible in meter statistics
+# 📊 Results
+
+## Controller Startup
+
+![Controller Startup](screenshots/controller-start.png)
 
 ---
 
-# 📊 Verification
+## Switch Connected
 
-Check installed flows
-
-```bash
-sudo ovs-ofctl -O OpenFlow13 dump-flows s1
-```
-
-Check installed meters
-
-```bash
-sudo ovs-ofctl -O OpenFlow13 dump-meters s1
-```
-
-Check meter statistics
-
-```bash
-sudo ovs-ofctl -O OpenFlow13 meter-stats s1
-```
+![Switch Connected](screenshots/switch-connected.png)
 
 ---
 
-# 📈 Experimental Results
+## Ping Test
 
-The implemented QoS controller successfully
-
-- Classified ICMP, TCP and UDP traffic
-- Installed protocol-specific OpenFlow rules
-- Applied bandwidth limitations using OpenFlow meters
-- Achieved TCP bandwidth limitation of approximately 3 Mbps
-- Successfully enforced UDP rate limiting with packet drops confirmed through meter statistics
+![Ping Test](screenshots/ping-test.png)
 
 ---
 
-# 🔮 Future Enhancements
+## TCP QoS
 
-- Multiple Switch Support
-- REST API Integration
-- Dynamic QoS Policies
-- Machine Learning based Traffic Classification
-- Web Dashboard
+![TCP Test](screenshots/tcp-test.png)
+
+---
+
+## UDP QoS
+
+![UDP Test](screenshots/udp-test.png)
+
+---
+
+## Flow Table
+
+![Flow Table](screenshots/flow-table.png)
+
+---
+
+## Installed Meters
+
+![Dump Meters](screenshots/dump-meters.png)
+
+---
+
+## Meter Statistics
+
+![Meter Statistics](screenshots/meter-stats.png)
+
+---
+
+## Controller Packet Logs
+
+![Controller Logs](screenshots/controller-logs.png)
+
+---
+
+# 📈 Verification
+
+The implementation successfully demonstrates:
+
+- Dynamic packet classification
+- OpenFlow Meter Table configuration
+- Bandwidth limitation using meters
+- Protocol-specific flow installation
+- Traffic prioritization
+- Real-time packet monitoring
+
+---
+
+# 📄 License
+
+This project is licensed under the MIT License.
 
 ---
 
@@ -235,10 +224,8 @@ The implemented QoS controller successfully
 
 **Shahith J**
 
-Bachelor of Engineering – Cyber Security
+Cyber Security Enthusiast
+
+GitHub: https://github.com/ShahithJ
 
 ---
-
-# 📜 License
-
-This project is licensed under the MIT License.
